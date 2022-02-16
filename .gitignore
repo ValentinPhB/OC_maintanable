@@ -1,3 +1,13 @@
 **/__pycache__
 *.pyc
+
+# Virtual environnement
 venv
+env/
+
+# IDE
+.idea
+.vscode
+
+# MAC OS
+.DS_store
