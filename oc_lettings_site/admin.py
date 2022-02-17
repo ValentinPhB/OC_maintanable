@@ -1,10 +1,11 @@
 from django.contrib import admin
 
-from .models import Letting
+from lettings.models import LettingReview
+from profiles.models import ProfileReview
+
 from .models import Address
-from .models import Profile
 
 
-admin.site.register(Letting)
+admin.site.register(LettingReview)
 admin.site.register(Address)
-admin.site.register(Profile)
+admin.site.register(ProfileReview)
