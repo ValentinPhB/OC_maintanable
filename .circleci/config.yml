@@ -6,8 +6,16 @@ jobs:
       - image: cimg/python:3.10.2
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
+      - run:
+          name: Install Python deps in a venv
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements/dev.txt
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements/dev.txt" }}
+          paths:
+            - "venv"
   test:
     docker:
       - image: cimg/python:3.10.2
@@ -15,10 +23,19 @@ jobs:
       - checkout
       - run:
           name: Run tests
-          command: pytest
+          command: |
+            . venv/bin/activate
+            pytest
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1
+      - store_test_results:
+          path: test-reports/
 
 workflows:
   build_and_test:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+          - build
