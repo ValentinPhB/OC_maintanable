@@ -2,9 +2,6 @@ import pytest
 
 from django.test import Client, TestCase
 from django.urls import reverse, resolve
-from django.contrib.auth.models import User
-
-from profiles.models import Profile
 
 
 @pytest.mark.django_db
@@ -20,5 +17,4 @@ class TestHomeIndexPage(TestCase):
     def test_title_view_home(self):
         response = self.client.get(self.path)
 
-        self.assertContains(response, self.title_expected)
-
+        self.assertContains(response, self.title_expected, status_code=200)

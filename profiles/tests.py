@@ -20,7 +20,7 @@ class TestProfilesIndexPage(TestCase):
     def test_title_view_profiles_index(self):
         response = self.client.get(self.path)
 
-        self.assertContains(response, self.title_expected)
+        self.assertContains(response, self.title_expected, status_code=200)
 
 
 @pytest.mark.django_db
@@ -36,4 +36,4 @@ class TestProfilesElementPage(TestCase):
     def test_title_view_profiles_element(self):
         response = self.client.get(self.path)
 
-        self.assertContains(response, self.title_expected)
+        self.assertContains(response, self.title_expected, status_code=200)

@@ -20,7 +20,7 @@ class TestLettingsIndexPage(TestCase):
     def test_title_view_lettings_index(self):
         response = self.client.get(self.path)
 
-        self.assertContains(response, self.title_expected)
+        self.assertContains(response, self.title_expected, status_code=200)
 
 
 @pytest.mark.django_db
@@ -37,4 +37,4 @@ class TestLettingsElementPage(TestCase):
     def test_title_view_lettings_element(self):
         response = self.client.get(self.path)
 
-        self.assertContains(response, self.title_expected)
+        self.assertContains(response, self.title_expected, status_code=200)
