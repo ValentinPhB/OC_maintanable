@@ -4,6 +4,9 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.10.2
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - restore_cache:
@@ -21,6 +24,9 @@ jobs:
   test:
     docker:
       - image: cimg/python:3.10.2
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - restore_cache:
@@ -41,9 +47,13 @@ workflows:
   build_and_test:
     jobs:
       - build:
+          context:
+            - OC-P13
           filters:
               branches:
                 only: main
       - test:
+          context:
+            - OC-P13
           requires:
             - build
