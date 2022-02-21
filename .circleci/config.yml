@@ -32,7 +32,7 @@ jobs:
             pytest
       - store_artifacts:
           path: test-reports/
-          destination: tr1
+          destination: python_app
       - store_test_results:
           path: test-reports/
 
