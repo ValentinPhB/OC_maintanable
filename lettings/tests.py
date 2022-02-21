@@ -3,8 +3,7 @@ import pytest
 from django.test import Client, TestCase
 from django.urls import reverse, resolve
 
-from lettings.models import Letting
-from oc_lettings_site.models import Address
+from lettings.models import Letting, Address
 
 
 @pytest.mark.django_db
