@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('oc_lettings_site', '__first__'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
