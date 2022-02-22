@@ -9,5 +9,5 @@ WORKDIR ${PROJECT_NAME}
 COPY requirements.txt /${PROJECT_NAME}
 RUN pip install -r requirements.txt
 
-ENTRYPOINT exec python manage.py migrate && python manage.py runserver
+ENTRYPOINT exec python manage.py runserver
 EXPOSE 8000
