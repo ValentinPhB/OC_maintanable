@@ -50,7 +50,7 @@ jobs:
           docker_layer_caching: true
 
       - run: |
-          TAG=$CIRCLE_BUILD_NUM
+          TAG=$CIRCLE_SHA1
           docker build -t oc_lettings_image .
           docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
           echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
