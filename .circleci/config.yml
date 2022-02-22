@@ -4,9 +4,6 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.10.2
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - restore_cache:
@@ -24,9 +21,6 @@ jobs:
   test:
     docker:
       - image: cimg/python:3.10.2
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - restore_cache:
@@ -42,18 +36,41 @@ jobs:
           destination: python_app
       - store_test_results:
           path: test-reports/
+  containerization:
+    docker:
+      - image: cimg/go:1.17
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+        version: 19.03.13
+        docker_layer_caching: true
+
+      - run: |
+        TAG=$CIRCLE_BUILD_NUM
+        docker build -t oc_lettings_image .
+        docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
+        echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+        docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
+        
 
 workflows:
   build_and_test:
     jobs:
       - build:
+      - test:
+        requires:
+          - build
+  Containerization_and_deploy:
+    jobs:
+      - containerization:
           context:
             - OC-P13
           filters:
               branches:
                 only: main
-      - test:
-          context:
-            - OC-P13
           requires:
-            - build
+            - build_and_test
+            
