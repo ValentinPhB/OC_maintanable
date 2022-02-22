@@ -44,27 +44,25 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
+
       - setup_remote_docker:
-        version: 19.03.13
-        docker_layer_caching: true
+          version: 19.03.13
+          docker_layer_caching: true
 
       - run: |
-        TAG=$CIRCLE_BUILD_NUM
-        docker build -t oc_lettings_image .
-        docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
-        echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-        docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
-        
+          TAG=$CIRCLE_BUILD_NUM
+          docker build -t oc_lettings_image .
+          docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
+          echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+          docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
 
 workflows:
-  build_and_test:
+  build_test_containerization:
     jobs:
-      - build:
+      - build
       - test:
-        requires:
+          requires:
           - build
-  Containerization_and_deploy:
-    jobs:
       - containerization:
           context:
             - OC-P13
@@ -72,5 +70,6 @@ workflows:
               branches:
                 only: main
           requires:
-            - build_and_test
+            - build
+            - test
             
