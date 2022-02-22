@@ -9,5 +9,5 @@ WORKDIR ${PROJECT_NAME}
 COPY requirements.txt /${PROJECT_NAME}
 RUN pip install -r requirements.txt
 
-ENTRYPOINT exec python manage.py runserver
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 EXPOSE 8000
