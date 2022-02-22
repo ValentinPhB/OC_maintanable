@@ -2,11 +2,12 @@ FROM python:latest
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-RUN mkdir /code
-WORKDIR /code
-COPY requirements.txt /code/
+ENV PROJECT_NAME='oc_lettings'
+RUN mkdir ${PROJECT_NAME}
+WORKDIR ${PROJECT_NAME}
+COPY requirements.txt /${PROJECT_NAME}
 RUN pip install -r requirements.txt
-COPY . /code/
+COPY . ${PROJECT_NAME}
 
-CMD python manage.py migrate && python manage.py runserver
+ENTRYPOINT exec python manage.py migrate && python manage.py runserver
 EXPOSE 8000
