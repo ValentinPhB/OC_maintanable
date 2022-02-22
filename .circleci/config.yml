@@ -49,12 +49,14 @@ jobs:
           version: 19.03.13
           docker_layer_caching: true
 
-      - run: |
-          TAG=$CIRCLE_SHA1
-          docker build -t oc_lettings_image .
-          docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
-          echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-          docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
+      - run:  
+          name: Build dockerfile, Tag with CIRCLE_SHA1 and push to personnal DockerHub
+          command: |
+            TAG=$CIRCLE_SHA1
+            docker build -t oc_lettings_image .
+            docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
+            echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+            docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
 
 workflows:
   build_test_containerization:
