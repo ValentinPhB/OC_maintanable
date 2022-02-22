@@ -1,0 +1,15 @@
+.git/
+__pycache__
+*.pyc
+.pytest_cache
+
+# Virtual environnement
+venv
+env/
+
+# IDE
+.idea
+.vscode
+
+# MAC OS
+.DS_store
