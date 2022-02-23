@@ -65,9 +65,6 @@ jobs:
             docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
             echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
             docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
-  deploy:
-    name: Heroku deployment
-    - heroku/deploy-via-git
 
 workflows:
   build_tests_containerization_and_deploy:
@@ -84,12 +81,12 @@ workflows:
                 only: main
           requires:
             - tests
-      - deploy:
+      - heroku/deploy-via-git:
           context:
-                - OC-P13
-              filters:
-                  branches:
-                    only: main
-              requires:
-                - containerization
+            - OC-P13
+          filters:
+              branches:
+                only: main
+          requires:
+            - containerization
             
