@@ -43,8 +43,8 @@ jobs:
           path: tests-reports/
   containerization:
     environment:
-      - TAG=$CIRCLE_SHA1
-      - IMAGE_NAME=oc_lettings_image
+      TAG: $CIRCLE_SHA1
+      IMAGE_NAME: oc_lettings_image
     docker:
       - image: cimg/go:1.17
         auth:
