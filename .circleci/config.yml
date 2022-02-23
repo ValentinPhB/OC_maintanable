@@ -26,11 +26,16 @@ jobs:
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
-          name: Run tests and save it as artifact
+          name: Run flake8 and save it as artifact
           command: |
             . venv/bin/activate;
             mkdir test-reports;
-            pytest > test-reports/artifact-1;
+            flake8 > test-reports/artifact-1;
+      - run:
+          name: Run pytest and save it as artifact
+          command: |
+            . venv/bin/activate;
+            pytest > test-reports/artifact-2;
       - store_artifacts:
           path: test-reports/
           destination: python_app
