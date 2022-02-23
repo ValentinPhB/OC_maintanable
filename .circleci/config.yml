@@ -42,9 +42,6 @@ jobs:
       - store_test_results:
           path: tests-reports/
   containerization:
-    environment:
-      TAG: $CIRCLE_SHA1
-      IMAGE_NAME: oc_lettings_image
     docker:
       - image: cimg/go:1.17
         auth:
@@ -60,7 +57,8 @@ jobs:
       - run:  
           name: Build dockerfile, Tag with CIRCLE_SHA1 and push to personnal DockerHub
           command: |
-            docker build -t $IMAGE_NAME .
+            TAG=$CIRCLE_SHA1
+            docker build -t oc_lettings_image .
             docker tag oc_lettings_image:latest $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
             echo $DOCKER_PASS | docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
             docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
