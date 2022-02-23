@@ -18,7 +18,7 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - "venv"
-  test:
+  tests:
     docker:
       - image: cimg/python:3.10.2
     steps:
@@ -26,21 +26,21 @@ jobs:
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
-          name: Run flake8 and save it as artifact
+          name: Run flake8 and save result if exists as artifact
           command: |
             . venv/bin/activate;
-            mkdir test-reports;
-            flake8 > test-reports/artifact-1;
+            mkdir tests-reports;
+            flake8 > tests-reports/flake8;
       - run:
           name: Run pytest and save it as artifact
           command: |
             . venv/bin/activate;
-            pytest > test-reports/artifact-2;
+            pytest > tests-reports/pytest;
       - store_artifacts:
-          path: test-reports/
-          destination: python_app
+          path: tests-reports/
+          destination: oc_lettings_site 
       - store_test_results:
-          path: test-reports/
+          path: tests-reports/
   containerization:
     docker:
       - image: cimg/go:1.17
@@ -64,10 +64,10 @@ jobs:
             docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
 
 workflows:
-  build_test_containerization:
+  build_tests_containerization:
     jobs:
       - build
-      - test:
+      - tests:
           requires:
           - build
       - containerization:
@@ -77,6 +77,5 @@ workflows:
               branches:
                 only: main
           requires:
-            - build
-            - test
+            - tests
             
