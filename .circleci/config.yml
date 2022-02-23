@@ -81,12 +81,12 @@ workflows:
                 only: main
           requires:
             - tests
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
           context:
-                - OC-P13
-              filters:
-                  branches:
-                    only: main
-              requires:
-                - containerization
+            - OC-P13
+          filters:
+              branches:
+                only: main
+          requires:
+            - containerization
             
