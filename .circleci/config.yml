@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs: 
+  heroku: circleci/heroku@1.2.6
+
 jobs:
   build:
     docker:
@@ -64,7 +67,7 @@ jobs:
             docker push $DOCKERHUB_USERNAME/$REPO_NAME:$TAG
 
 workflows:
-  build_tests_containerization:
+  build_tests_containerization_and_deploy:
     jobs:
       - build
       - tests:
@@ -78,4 +81,12 @@ workflows:
                 only: main
           requires:
             - tests
+      - heroku/deploy-via-git
+          context:
+                - OC-P13
+              filters:
+                  branches:
+                    only: main
+              requires:
+                - containerization
             
