@@ -157,18 +157,19 @@ Ensuite, récupérez le nom de l'image et, sur votre machine, exécutez les comm
 - Créez vous une compte [Sentry](https://sentry.io/signup/)
 - Créez un projet, sélectionnez django, sélectionnez "Alert me on every issue", enfin cliquez sur "Create Project".
 -  Une fenètre dans votre navigateur s'ouvre la seule information à récupérer est la chaine string suivant dsn= car votre projet est déja configuré à l'exeption de cette donnée qui permettra la récupération de ces "ISSUES".
--  Ainsi copie-z cette chaine de caractère et collez la dans votre projet, à sa place, dans le fichier settings.py de votre projet.
+-  Ainsi copie-z cette chaine de caractère et collez la dans votre projet (branche principale), à sa place, dans le fichier settings.py de votre projet.
 -  Dans votre fichier settings.py la valeur 
 ```python
 dsn=''
 ```
 - Ne doit plus être vide.
 
+- Poussez vos modifications de la branche principale sur votre dépôt distant pour actionner le pipeline.
 
 
 ### Utilisation 
 
-- Une fois la configuration effectuée, Sentry est utilisable.
+- Une fois la configuration effectuée, et le pipeline passé avec succès, Sentry est utilisable.
 - Lorsque l'application est déployée et qu'un requète sur l'url "https://NOM_DE_VOTRE_APP_HEROKU.herokuapp.com/sentry-debug/" est formulée, la fonction nommée "trigger_error" (définie aupréalablement dans le ficher url.py du projet) est exécutée, rapportant une ZeroDivisionError "issue" à sentry.
 - Pour voir le rapport d'"Issue" il vous suffit ensuite de vous connecter sur [Sentry](https://sentry.io/) et d'aller dans le menu "ISSUES".
 
