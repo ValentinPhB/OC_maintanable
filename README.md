@@ -156,15 +156,15 @@ Ensuite, récupérez le nom de l'image et, sur votre machine, exécutez les comm
 
 - Créez vous une compte [Sentry](https://sentry.io/signup/)
 - Créez un projet, sélectionnez django, sélectionnez "Alert me on every issue", enfin cliquez sur "Create Project".
--  Une fenètre s'ouvre la seule information à récupérer est la chaine string suivant dsn= car votre projet est déja configuré.
-
-- Dans votre version local du dépôt créez un ficher à la racine du dépôt (où se trouve également requirements.txt) nommé sentry_config.py
-- Ajoutez la chaine de string précédement copée :
- ```python
-Personal_dsn = $CHAINE_DE_STRING_PRÉCÉDEMENT_COPIÉE_DE_SENTRY
+-  Une fenètre dans votre navigateur s'ouvre la seule information à récupérer est la chaine string suivant dsn= car votre projet est déja configuré à l'exeption de cette donnée qui permettra la récupération de ces "ISSUES".
+-  Ainsi copie-z cette chaine de caractère et collez la dans votre projet, à sa place, dans le fichier settings.py de votre projet.
+-  Dans votre fichier settings.py la valeur 
+```python
+dsn=''
 ```
-- N'oubliez pas de respecter la PEP8 avec une ligne vide à la fin du fichier créé (utilisez la commande `flake8`pour être sûr d'être conforme).
--Etant une donnée sensible, le fichier sentry_config.py est déjà dans les exclusion du fichier .gitignore.
+- Ne doit plus être vide.
+
+
 
 ### Utilisation 
 
