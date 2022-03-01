@@ -108,7 +108,10 @@ Seul les modifications du projet poussée sur la branche principale (main) déla
 
 ### Connexions :
 
-- Clonez le dépôt actuel dans le dossier de votre choix sur votre poste puis poussez le dans un de vos dépôt personnel créé sur votre Github et nommé selon votre choix.
+- Clonez le dépôt actuel dans le dossier de votre choix sur votre poste puis poussez le dans un de vos dépôt personnel créé sur votre Github et nommé selon votre choix en changeant url Origin :
+```
+git remote set-url origin http://github.com/YOU/YOUR_REPO
+```
 
 - Dans DockerHub créez un dépôt du nom de votre choix.
 
